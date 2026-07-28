@@ -10,24 +10,30 @@
 
 	let isLoading = $state(true);
 	let emojis: EmojiResponse[] | null | undefined = $state<EmojiResponse[] | null>();
+
+	function loading_handle(status: boolean) {
+		isLoading = status;
+		console.log(isLoading);
+	}
 	onMount(async () => {
 		emojis = await get_all_emoji();
 
 		setTimeout(() => {
 			isLoading = false;
-		}, 1000);
+		}, 5000);
 	});
 </script>
 
 {#if isLoading}
 	<Transition />
-{:else}
-	<div class="min-h-screen flex flex-col">
-		<main class="px-64 pb-9">
-			<Header />
-			<Hero />
-			<Expolor bind:isLoading {emojis} />
-		</main>
-		<Footer />
-	</div>
 {/if}
+
+<div class="min-h-screen flex flex-col z-0">
+	<main class="lg:px-64 px-5 pb-9">
+		<Header />
+		<Hero />
+		<Expolor {loading_handle} {emojis} />
+	</main>
+	<Footer />
+</div>
+

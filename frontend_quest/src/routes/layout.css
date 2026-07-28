@@ -16,6 +16,14 @@ body::-webkit-scrollbar {
 	display: none;
 }
 
+@media (width < 64rem
+	/* 1024px */
+) {
+	body::-webkit-scrollbar {
+		display: flex;
+	}
+}
+
 body {
 	overflow-x: hidden;
 	letter-spacing: 1px;

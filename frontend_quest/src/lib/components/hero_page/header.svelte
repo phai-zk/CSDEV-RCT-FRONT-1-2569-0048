@@ -1,4 +1,4 @@
 <nav class="flex flex-row items-center gap-2.5 p-4.5 w-full">
-    <img width="36" src="/images/Logo.png" alt="Logo" />
-    <p class="text-2xl font-semibold">Banana</p>
+    <img class="md:w-9 w-6" src="/images/Logo.png" alt="Logo" />
+    <p class="md:text-2xl text-lg font-semibold">Banana</p>
 </nav>
