@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+* {
+	scroll-behavior: smooth;
+	box-sizing: border-box;
+	user-select: none;
+	font-family: "Inter Tight";
+}
+
+a,
+button {
+	cursor: url("/images/cursor_hover.png") 0 0, pointer;
+}
+
+body::-webkit-scrollbar {
+	display: none;
+}
+
+body {
+	overflow-x: hidden;
+	letter-spacing: 1px;
+	background: #181818;
+	color: #ffffff;
+	min-height: 100vh;
+	width: 100vw;
+	cursor: url("/images/cursor.png") 0 0, auto;
+}
