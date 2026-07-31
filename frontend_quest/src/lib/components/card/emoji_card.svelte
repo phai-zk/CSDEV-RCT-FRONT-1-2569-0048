@@ -2,46 +2,46 @@
 	import type { EmojiResponse } from '$lib/utils/emoji';
 	import { fade, fly } from 'svelte/transition';
 
-	interface Prop { emoji: EmojiResponse; }
-	const { emoji }: Prop  = $props();
+	interface Prop {
+		emoji: EmojiResponse;
+	}
+	const { emoji }: Prop = $props();
 
 	let copied = $state(false);
 	const API_BASE = '/api/emoji';
 
-	async function copy() {
-		const response = await fetch(`${API_BASE}/${emoji?.id}`);
-		const blob = await response.blob();
+	async function copy(e: Event) {
+		const btn = e.currentTarget as HTMLButtonElement;
+		const img = btn.querySelector('img') as HTMLImageElement;
+		try {
+			await img.decode();
+			
+			const canvas = document.createElement('canvas');
+			canvas.width = img.width;
+			canvas.height = img.height;
 
-		const img = new Image();
-		img.src = URL.createObjectURL(blob);
+			const ctx = canvas.getContext('2d');
+			ctx?.drawImage(img, 0, 0);
 
-		await img.decode();
+			const pngBlob = await new Promise<Blob>((resolve) => {
+				canvas.toBlob((blob) => {
+					resolve(blob!);
+				}, 'image/png');
+			});
 
-		const canvas = document.createElement('canvas');
-		canvas.width = img.width;
-		canvas.height = img.height;
-
-		const ctx = canvas.getContext('2d');
-		ctx?.drawImage(img, 0, 0);
-
-		const pngBlob = await new Promise<Blob>((resolve) => {
-			canvas.toBlob((blob) => {
-				resolve(blob!);
-			}, 'image/png');
-		});
-
-		await navigator.clipboard.write([
-			new ClipboardItem({
-				'image/png': pngBlob
-			})
-		]);
-
-		URL.revokeObjectURL(img.src);
-
-		copied = true;
-		setTimeout(() => {
-			copied = false;
-		}, 1000);
+			await navigator.clipboard.write([
+				new ClipboardItem({
+					'image/png': pngBlob
+				})
+			]);
+			
+			copied = true;
+			setTimeout(() => {
+				copied = false;
+			}, 1000);
+		} catch (e) {
+			console.error('Fail to copy: ' + e);
+		}
 	}
 
 	function error_handle(e: Event) {
@@ -52,9 +52,7 @@
 
 <button
 	id="card"
-	onclick={async () => {
-		await copy();
-	}}
+	onclick={copy}
 	class="relative flex flex-col items-center justify-center gap-2 rounded-lg p-2 hover:bg-[#FFFFFF1C] xl:px-6 xl:py-3"
 	style="transition: 0.5s;"
 >
