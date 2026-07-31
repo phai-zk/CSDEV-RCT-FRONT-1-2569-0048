@@ -11,16 +11,12 @@
 	let isLoading = $state(true);
 	let emojis: EmojiResponse[] | null | undefined = $state<EmojiResponse[] | null>();
 
-	function loading_handle(status: boolean) {
-		isLoading = status;
-		console.log(isLoading);
-	}
 	onMount(async () => {
 		emojis = await get_all_emoji();
 
 		setTimeout(() => {
 			isLoading = false;
-		}, 5000);
+		}, 1000);
 	});
 </script>
 
@@ -29,10 +25,10 @@
 {/if}
 
 <div class="min-h-screen flex flex-col z-0">
-	<main class="lg:px-64 px-5 pb-9">
+	<main class="2xl:px-64 md:px-20 px-5 pb-9">
 		<Header />
 		<Hero />
-		<Expolor {loading_handle} {emojis} />
+		<Expolor {emojis} />
 	</main>
 	<Footer />
 </div>

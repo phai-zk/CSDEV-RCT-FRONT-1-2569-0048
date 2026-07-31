@@ -2,13 +2,8 @@
 	import type { EmojiResponse } from '$lib/utils/emoji';
 	import { fade, fly } from 'svelte/transition';
 
-	const {
-		emoji,
-		onload_handle
-	}: {
-		emoji: EmojiResponse;
-		onload_handle: () => void;
-	} = $props();
+	interface Prop { emoji: EmojiResponse; }
+	const { emoji }: Prop  = $props();
 
 	let copied = $state(false);
 	const API_BASE = '/api/emoji';
@@ -60,7 +55,7 @@
 	onclick={async () => {
 		await copy();
 	}}
-	class="relative flex flex-col items-center justify-center gap-2 rounded-lg xl:px-6 xl:py-3 p-2 hover:bg-[#FFFFFF1C]"
+	class="relative flex flex-col items-center justify-center gap-2 rounded-lg p-2 hover:bg-[#FFFFFF1C] xl:px-6 xl:py-3"
 	style="transition: 0.5s;"
 >
 	<img
@@ -70,13 +65,14 @@
 		alt="emoji"
 		loading="lazy"
 		decoding="async"
-		onload={onload_handle}
 		onerror={error_handle}
 	/>
-	<p class="w-full overflow-clip text-center md:text-xs text-[8px] text-ellipsis">:{emoji?.name}:</p>
+	<p class="w-full overflow-clip text-center text-[8px] text-ellipsis md:text-xs">
+		:{emoji?.name}:
+	</p>
 	{#if copied}
 		<div transition:fade={{ duration: 250 }} class="overlay">
-			<p in:fly={{ y: -50, delay: 1 }} class="md:text-lg text-xs">Copied!</p>
+			<p in:fly={{ y: -50, delay: 1 }} class="text-xs md:text-lg">Copied!</p>
 		</div>
 	{/if}
 </button>
