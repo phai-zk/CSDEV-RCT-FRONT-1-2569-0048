@@ -6,10 +6,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 		const res = await fetch('/api/emoji');
 
 		if (!res.ok) {
-			console.error(`HTTP error! status: ${res.status}`);
-			return {
-				data: null
-			};
+			throw Error('Failed to load emoji');
 		}
 
 		const data: { data: EmojiResponse[] } = await res.json();
