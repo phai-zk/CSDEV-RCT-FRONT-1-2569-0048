@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { EmojiResponse } from '$lib/utils/emoji';
+	import type { EmojiResponse } from '$lib/type/emoji';
 	import { fade, fly } from 'svelte/transition';
 
 	interface Prop {
@@ -70,7 +70,7 @@
 	</p>
 	{#if copied}
 		<div transition:fade={{ duration: 250 }} class="overlay">
-			<p in:fly={{ y: -50, delay: 1 }} class="text-xs md:text-lg">Copied!</p>
+			<p in:fly={{ y: -50, delay: 1 }} class="text-xs md:text-sm lg:text-lg">Copied!</p>
 		</div>
 	{/if}
 </button>

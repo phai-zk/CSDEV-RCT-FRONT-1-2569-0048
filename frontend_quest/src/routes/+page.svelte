@@ -4,16 +4,16 @@
 	import Expolor from '$lib/components/hero_page/explore.svelte';
 	import Footer from '$lib/components/hero_page/footer.svelte';
 	import Transition from '$lib/components/transition.svelte';
-	import get_all_emoji from '$lib/utils/emoji.js';
-	import type { EmojiResponse } from '$lib/utils/emoji.js';
+	import type { EmojiResponse } from '$lib/type/emoji.js';
 	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
 
 	let isLoading = $state(true);
-	let emojis: EmojiResponse[] | null | undefined = $state<EmojiResponse[] | null>();
+	let { data }: { data: PageData } = $props();
+
+	let emojis: EmojiResponse[] | null = $derived(data?.data) 
 
 	onMount(async () => {
-		emojis = await get_all_emoji();
-
 		setTimeout(() => {
 			isLoading = false;
 		}, 1000);

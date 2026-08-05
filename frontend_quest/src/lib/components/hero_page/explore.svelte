@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { EmojiResponse } from '$lib/utils/emoji';
+	import type { EmojiResponse } from '$lib/type/emoji';
 	import EmojiCard from '../card/emoji_card.svelte';
 
 	let {
